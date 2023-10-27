@@ -1,6 +1,9 @@
 # CS410 FALL 2023 PROJECT PROPOSAL
 ## Team Details
-- **Team Members**: Hermann Rosch, Sudeshna Pal, Ahmad Barqawitz
+- **Team Members**:
+  - Hermann Rosch
+  - Sudeshna Pal
+  - Ahmad Barqawitz
 - **Team Captain**: Hermann Rosch
 - **Team Name**: Insightful Highlighters
 - **Project Name**: Textual Spotlight
