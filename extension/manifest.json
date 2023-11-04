@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "AI Expander",
+    "name": "Textual Spotlight",
     "version": "1.0",
-    "description": "Get explanations from large language models",
+    "description": "Chrome Extension for Contextual Text Understanding with GPT-4",
     "icons": {
         "48": "/resources/icon48.png",
         "128": "/resources/icon128.png"
@@ -10,11 +10,17 @@
     "background": {
         "service_worker": "background.js"
     },
-    "permissions": ["contextMenus", "storage"],
+    "permissions": ["contextMenus", "storage", "tabs"],
     "action": {
         "default_popup": "popup.html",
-        "default_title": "AI Expander"
+        "default_title": "Textual Spotlight"
     },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["contentScript.js"]
+        }
+    ],
     "host_permissions": [
         "http://*/*",
         "https://*/*"

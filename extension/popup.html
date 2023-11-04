@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="popup.css">
+    <title>Textual Spotlight</title>
+</head>
+<body>
+<div class="container">
+    <h1>Textual Spotlight</h1>
+    <div class="input-group">
+        <label for="api-key">API Key:</label>
+        <div class="api-input-container">
+            <input type="text" id="api-key" placeholder="Enter your API Key here"/>
+            <button id="save-api-key" title="Save API Key"><i class="fas fa-save"></i></button>
+            <span id="save-confirm" class="hidden"><i class="fas fa-check-circle"></i></span>
+        </div>
+    </div>
+    <div class="input-group">
+        <label for="text-input">Selected Text:</label>
+        <textarea id="text-input" placeholder="Selected text will appear here..." readonly></textarea>
+    </div>
+    <div class="button-container">
+        <button id="explain" class="action-button">Explain</button>
+        <button id="summarize" class="action-button">Summarize</button>
+        <button id="paraphrase" class="action-button">Paraphrase</button>
+    </div>
+    <div id="output">The explanation will appear here...</div>
+</div>
+<script src="popup.js"></script>
+</body>
+</html>
