@@ -3,6 +3,15 @@ body, input, button, textarea {
     font-size: 14px;
 }
 
+#api-key {
+    font-family: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+    font-size: 9px;
+}
+
+#model-select {
+    font-family: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+}
+
 .container {
     width: 400px;
     padding: 20px;
@@ -30,31 +39,24 @@ label {
     gap: 5px;
 }
 
-input[type="text"] {
-    flex-grow: 1;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-button#save-api-key {
-    padding: 10px;
-    flex-shrink: 0;
-}
-
+input[type="text"],
 textarea {
     padding: 10px;
     margin-top: 5px;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-sizing: border-box;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+}
+
+textarea {
     height: 150px;
     resize: vertical;
     overflow: auto;
 }
-
 
 button {
     padding: 10px;
@@ -98,4 +100,49 @@ button#save-api-key {
     padding: 10px;
     min-height: 100px;
     background: #f9f9f9;
+}
+
+#progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin: 20px 0;
+    position: relative;
+    height: 30px;
+}
+
+#progress-bar {
+    height: 100%;
+    background-color: #5b9bd5;
+    width: 0;
+    border-radius: 3px;
+    transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+@keyframes indeterminate {
+    0% {
+        left: -100%;
+        width: 100%;
+    }
+    50% {
+        left: 0;
+        width: 100%;
+    }
+    100% {
+        left: 100%;
+        width: 100%;
+    }
+}
+
+#progress-text {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    color: #333;
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+    z-index: 10;
 }

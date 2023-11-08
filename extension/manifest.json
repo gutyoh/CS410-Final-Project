@@ -10,7 +10,7 @@
     "background": {
         "service_worker": "background.js"
     },
-    "permissions": ["contextMenus", "storage", "tabs"],
+    "permissions": ["contextMenus", "storage", "tabs", "activeTab", "background"],
     "action": {
         "default_popup": "popup.html",
         "default_title": "Textual Spotlight"

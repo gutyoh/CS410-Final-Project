@@ -19,13 +19,27 @@
         </div>
     </div>
     <div class="input-group">
+        <label for="model-select">Model:</label>
+        <select id="model-select">
+            <option value="">Select a model</option>
+            <option value="openai">OpenAI gpt-4-1106-preview</option>
+            <option value="replicate">Meta llama-2-13b-chat</option>
+            <option value="cohere">Cohere NOT READY</option>
+            <option value="hugging">Hugging Face NOT READY</option>
+        </select>
+    </div>
+    <div class="input-group">
         <label for="text-input">Selected Text:</label>
-        <textarea id="text-input" placeholder="Selected text will appear here..." readonly></textarea>
+        <textarea id="text-input" placeholder="Selected text will appear here..."></textarea>
     </div>
     <div class="button-container">
         <button id="explain" class="action-button">Explain</button>
         <button id="summarize" class="action-button">Summarize</button>
         <button id="paraphrase" class="action-button">Paraphrase</button>
+    </div>
+    <div id="progress-bar-container" class="hidden">
+        <div id="progress-bar"></div>
+        <div id="progress-text" class="hidden">Processing...</div>
     </div>
     <div id="output">The explanation will appear here...</div>
 </div>
