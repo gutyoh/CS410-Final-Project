@@ -85,8 +85,13 @@ const getModelDetails = (model, apiKey, selectedText, action) => {
             "api_key": apiKey,
             "model": "13b-chat",
             "provider": "replicate"
+        },
+        'cohere': {
+            "api_key": apiKey,
+            "model": "command",
+            "provider": "cohere",
         }
-        // TODO: Add Cohere, HuggingFace and any other models here in the future
+        // TODO: Add HuggingFace and any other models here in the future
     };
 
     return {
