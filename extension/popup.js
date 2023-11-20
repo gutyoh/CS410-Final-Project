@@ -159,7 +159,6 @@ const getEmbedding = async (apiKey, texts, provider) => {
     return jsonResponse.data.map(entry => entry.embedding);
 };
 
-// Calculate cosine similarity between two text embeddings
 const calculateResultSimilarity = async (apiKey, selectedText, outputText, model) => {
     try {
         // Fetch embeddings for the two texts
