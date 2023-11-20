@@ -139,7 +139,7 @@ const getEmbedding = async (apiKey, texts, provider) => {
     const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
-            'X-API-KEY': apiKey,
+            'X-API-KEY': 'root',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload)
