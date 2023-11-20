@@ -125,6 +125,57 @@ const processText = async (action) => {
     }
 };
 
+
+const getEmbedding = async (apiKey, texts, provider) => {
+    const endpoint = "https://intelli-server.vercel.app/embed/text";
+    const payload = {
+        "api_key": apiKey,
+        "provider": provider,
+        "input": {
+            "texts": texts
+        }
+    };
+
+    const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'X-API-KEY': apiKey,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
+    }
+
+    const jsonResponse = await response.json();
+
+    // Check if the status is "OK"
+    if (jsonResponse.status !== "OK") {
+        throw new Error(`API Error: ${jsonResponse.status}`);
+    }
+    
+    return jsonResponse.data.map(entry => entry.embedding);
+};
+
+// Calculate cosine similarity between two text embeddings
+const calculateResultSimilarity = async (apiKey, selectedText, outputText, model) => {
+    try {
+        // Fetch embeddings for the two texts
+        const [selectedTextEmbedding, outputTextEmbedding] = await getEmbedding(apiKey, [selectedText, outputText], model);
+
+        // Use Matcher to calculate cosine similarity
+        const similarity = Matcher.cosineSimilarity(selectedTextEmbedding, outputTextEmbedding);
+
+        return similarity;
+    } catch (error) {
+        console.error("Error while fetching embeddings or calculating similarity:", error);
+        throw error;
+    }
+};
+
+
 document.addEventListener('DOMContentLoaded', async () => {
     const selectedText = await getStoredValue("selectedText");
     const apiKey = await getStoredValue("apiKey");
