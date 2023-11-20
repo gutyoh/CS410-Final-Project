@@ -1,0 +1,148 @@
+body, input, button, textarea {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+}
+
+#api-key {
+    font-family: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+    font-size: 9px;
+}
+
+#model-select {
+    font-family: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+}
+
+.container {
+    width: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+}
+
+.api-input-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+input[type="text"],
+textarea {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+}
+
+textarea {
+    height: 150px;
+    resize: vertical;
+    overflow: auto;
+}
+
+button {
+    padding: 10px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #5b9bd5;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+button:hover, button:focus {
+    background-color: #4a8bc2;
+}
+
+button#save-api-key {
+    font-size: 16px;
+    width: 40px;
+}
+
+#save-confirm {
+    color: #28a745;
+    margin-left: 5px;
+    font-size: 18px;
+}
+
+.hidden {
+    display: none;
+}
+
+.button-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#output {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 100px;
+    background: #f9f9f9;
+}
+
+#progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin: 20px 0;
+    position: relative;
+    height: 30px;
+}
+
+#progress-bar {
+    height: 100%;
+    background-color: #5b9bd5;
+    width: 0;
+    border-radius: 3px;
+    transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+@keyframes indeterminate {
+    0% {
+        left: -100%;
+        width: 100%;
+    }
+    50% {
+        left: 0;
+        width: 100%;
+    }
+    100% {
+        left: 100%;
+        width: 100%;
+    }
+}
+
+#progress-text {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    color: #333;
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+    z-index: 10;
+}
