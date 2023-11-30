@@ -146,3 +146,23 @@ button#save-api-key {
     text-align: center;
     z-index: 10;
 }
+
+#similarity-score-container {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+#similarity-score-value {
+    font-weight: bold;
+    color: #4a8bc2;
+}
+
+#similarity-indicator {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
