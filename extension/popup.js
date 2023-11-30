@@ -98,7 +98,7 @@ const getModelDetails = (model, apiKey, selectedText, action) => {
         ...providers[model],
         "action": action,
         "input": {
-            "system": `Perform action: ${action} on the selected content text from a web page`,
+            "system": `Perform action: ${action} on the selected content text from a web page.`,
             "messages": [{"role": "user", "content": selectedText}]
         }
     };
@@ -118,11 +118,55 @@ const processText = async (action) => {
     try {
         const response = await callAIModel(apiKey, selectedText, action, model);
         completeProgress(progressBar);
-        document.getElementById('output').innerText = response.data[0];
+
+        const outputText = response.data[0];
+        document.getElementById('output').innerText = outputText;
+
+        // Calculate cosine similarity
+        const similarityScore = await calculateResultSimilarity(apiKey, selectedText, outputText, model);
+        updateSimilarityUI(similarityScore);
     } catch (error) {
         console.error("Error:", error);
         document.getElementById('output').innerText = error.message || "An error occurred.";
     }
+};
+
+const calculateResultSimilarity = async (apiKey, selectedText, outputText, model) => {
+    try {
+        // Fetch embeddings for the two texts
+        const [selectedTextEmbedding, outputTextEmbedding] = await getEmbedding(apiKey, [selectedText, outputText], model);
+
+        // Use Matcher to calculate cosine similarity
+        const similarity = Matcher.cosineSimilarity(selectedTextEmbedding, outputTextEmbedding);
+
+        return similarity;
+    } catch (error) {
+        console.error("Error while fetching embeddings or calculating similarity:", error);
+        throw error;
+    }
+};
+
+const updateSimilarityUI = (similarityScore) => {
+    const scoreContainer = document.getElementById('similarity-score-container');
+    const scoreValue = document.getElementById('similarity-score-value');
+    const indicator = document.getElementById('similarity-indicator');
+
+    scoreValue.innerText = (similarityScore * 100).toFixed(2) + '%';
+    indicator.innerText = getEmoji(similarityScore);
+    indicator.title = getHoverMessage(similarityScore);
+    scoreContainer.classList.remove('hidden');
+};
+
+const getEmoji = (similarityScore) => {
+    if (similarityScore > 0.7) return '🤩';
+    if (similarityScore > 0.4) return '🙂';
+    return '😕';
+};
+
+const getHoverMessage = (similarityScore) => {
+    if (similarityScore > 0.7) return 'High similarity between the selected text and AI response.';
+    if (similarityScore > 0.4) return 'Medium similarity between the selected text and AI response.';
+    return 'Low similarity between the selected text and AI response.';
 };
 
 
@@ -150,28 +194,13 @@ const getEmbedding = async (apiKey, texts, provider) => {
     }
 
     const jsonResponse = await response.json();
+    console.log("Embedding response:", jsonResponse); // Debugging log
 
-    // Check if the status is "OK"
-    if (jsonResponse.status !== "OK") {
+    if (jsonResponse.status !== "OK" || !jsonResponse.data) {
         throw new Error(`API Error: ${jsonResponse.status}`);
     }
-    
+
     return jsonResponse.data.map(entry => entry.embedding);
-};
-
-const calculateResultSimilarity = async (apiKey, selectedText, outputText, model) => {
-    try {
-        // Fetch embeddings for the two texts
-        const [selectedTextEmbedding, outputTextEmbedding] = await getEmbedding(apiKey, [selectedText, outputText], model);
-
-        // Use Matcher to calculate cosine similarity
-        const similarity = Matcher.cosineSimilarity(selectedTextEmbedding, outputTextEmbedding);
-
-        return similarity;
-    } catch (error) {
-        console.error("Error while fetching embeddings or calculating similarity:", error);
-        throw error;
-    }
 };
 
 
