@@ -55,9 +55,9 @@ const resetProgress = (progressBar, progressText) => {
     progressText.classList.add('hidden');
 };
 
-const callAIModel = async (apiKey, selectedText, action, model) => {
+const callAIModel = async (apiKey, promptDetails, action, model) => {
     const endpoint = "https://intelli-server.vercel.app/chatbot/chat";
-    const modelDetails = getModelDetails(model, apiKey, selectedText, action);
+    const modelDetails = getModelDetails(model, apiKey, promptDetails, action);
 
     const response = await fetch(endpoint, {
         method: 'POST',
@@ -74,7 +74,29 @@ const callAIModel = async (apiKey, selectedText, action, model) => {
     return response.json();
 };
 
-const getModelDetails = (model, apiKey, selectedText, action) => {
+const generatePrompt = (selectedText, action) => {
+    let userInstruction;
+
+    switch (action) {
+        case 'explain':
+            userInstruction = `YOU MUST DIRECTLY provide a comprehensive but CONCISE explanation of the following text, ensuring it's clear and easy to understand. Keep the response concise enough to fit comfortably in a small UI space. Your output MUST ONLY DIRECTLY include the paraphrased text and NO MORE ADDITIONAL TEXT!`;
+            break;
+        case 'summarize':
+            userInstruction = `YOU MUST DIRECTLY summarize the following text in a brief, clear manner. Focus on key points and ensure the summary is CONCISE for easy reading in a limited UI space. Your output MUST ONLY DIRECTLY include the paraphrased text and NO MORE ADDITIONAL TEXT!`;
+            break;
+        case 'paraphrase':
+            userInstruction = `YOU MUST DIRECTLY paraphrase the following text to convey the same meaning in different words. Keep the paraphrased text clear and CONCISE for display in a compact UI. Your output MUST ONLY DIRECTLY include the paraphrased text and NO MORE ADDITIONAL TEXT!`;
+            break;
+        default:
+            userInstruction = `Action not recognized. Please select a valid action.`;
+    }
+
+    return `${userInstruction}\n\n"${selectedText}"`
+};
+
+const getModelDetails = (model, apiKey, prompt, action) => {
+    const systemInstruction = `You're an expert in processing text. Your task is to ${action} the text given by the user. Remember YOU MUST strictly follow the user's instructions.`;
+
     const providers = {
         'openai': {
             "api_key": apiKey,
@@ -91,15 +113,13 @@ const getModelDetails = (model, apiKey, selectedText, action) => {
             "model": "command",
             "provider": "cohere",
         }
-        // TODO: Add HuggingFace and any other models here in the future
     };
 
     return {
         ...providers[model],
-        "action": action,
         "input": {
-            "system": `Perform action: ${action} on the selected content text from a web page.`,
-            "messages": [{"role": "user", "content": selectedText}]
+            "system": systemInstruction,
+            "messages": [{"role": "user", "content": prompt}]
         }
     };
 };
@@ -109,6 +129,8 @@ const processText = async (action) => {
     const apiKey = document.getElementById('api-key').value;
     const selectedText = document.getElementById('text-input').value;
 
+    const prompt = generatePrompt(selectedText, action);
+
     if (!apiKey || !model) {
         document.getElementById('output').innerText = "Please enter your API key and select a model.";
         return;
@@ -116,7 +138,7 @@ const processText = async (action) => {
 
     const progressBar = initiateProgress();
     try {
-        const response = await callAIModel(apiKey, selectedText, action, model);
+        const response = await callAIModel(apiKey, prompt, action, model);
         completeProgress(progressBar);
 
         const outputText = response.data[0];
@@ -133,18 +155,15 @@ const processText = async (action) => {
 
 const calculateResultSimilarity = async (apiKey, selectedText, outputText, model) => {
     try {
-        // Fetch embeddings for the two texts
         const [selectedTextEmbedding, outputTextEmbedding] = await getEmbedding(apiKey, [selectedText, outputText], model);
 
-        // Use Matcher to calculate cosine similarity
-        const similarity = Matcher.cosineSimilarity(selectedTextEmbedding, outputTextEmbedding);
-
-        return similarity;
+        return Matcher.cosineSimilarity(selectedTextEmbedding, outputTextEmbedding);
     } catch (error) {
         console.error("Error while fetching embeddings or calculating similarity:", error);
-        throw error;
+        return 'Similarity could not be calculated. Please try again!';
     }
 };
+
 
 const updateSimilarityUI = (similarityScore) => {
     const scoreContainer = document.getElementById('similarity-score-container');
