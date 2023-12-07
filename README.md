@@ -11,12 +11,12 @@
 
 
 ## overview
-Textual Spotlight is a Chrome Extension designed to empower users with a contextual understanding of web text content. It provides explanations, summaries, and paraphrases of selected text via a seamless browser integration from multiple LLM models with the ability to compare the semantics of the generated result and how closely it is related to the user query. 
+Textual Spotlight is a chrome extension designed to empower users with a contextual understanding of web text content. It provides explanations, summaries, and paraphrases of selected text via a seamless browser integration from multiple LLM models with the ability to compare the semantics of the generated result and how closely it is related to the user query. 
 
 ## Installation
 
 ### Extension
-**Prerequisites**: A Chromium-based web browser with support for Chrome Extensions and activation of Developer Mode.
+**Prerequisites**: A chromium-based web browser with support for chrome extensions and activation of Developer Mode.
 
 **Step 1**: Obtain the extension by downloading the package from the GitHub.
 
@@ -30,7 +30,7 @@ Textual Spotlight is a Chrome Extension designed to empower users with a context
 - [replicate.com](https://replicate.com/).
 
 ### Backend
-The extension uses the [intelliserver](https://github.com/intelligentnode/IntelliServer) open source node js middleware to communicate with the models and return the response to the extension. The middleware installed in the vercel server to be used for this demo and **no need to install it again to use the extension**.
+Textual Spotlight extension uses the [intelliserver](https://github.com/intelligentnode/IntelliServer) open source node js middleware to communicate with the models and return the response to the extension. The middleware installed in the vercel server to be used for this demo and **no need to install it again to use the extension**.
 
 The steps to setup the backend: 
 - Pull the image:
@@ -63,7 +63,7 @@ Example of the extension output:
 <img src="screenshots/popup_openai.png" width="350em">
 
 ## Demonstration
-TODO: add the demo video.
+TODO: add the demo video link.
 
 ## Testing
 - [Click here to view the Project Testing PDF](./docs/CS410_Final_Project_Testing.pdf)
