@@ -30,7 +30,7 @@ Textual Spotlight is a Chrome Extension designed to empower users with a context
 - [replicate.com](https://replicate.com/).
 
 ### Backend
-The extension uses the [intelliserver](https://github.com/intelligentnode/IntelliServer) open source node js middleware to communicate with the models and return the response to the extension. The server installed in the vercel server is to be used for this demo and **no need to install it again to use the extension**.
+The extension uses the [intelliserver](https://github.com/intelligentnode/IntelliServer) open source node js middleware to communicate with the models and return the response to the extension. The middleware installed in the vercel server to be used for this demo and **no need to install it again to use the extension**.
 
 The steps to setup the backend: 
 - Pull the image:
