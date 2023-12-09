@@ -37,12 +37,20 @@
         <button id="summarize" class="action-button">Summarize</button>
         <button id="paraphrase" class="action-button">Paraphrase</button>
     </div>
+    <div id="request-timer" class="hidden"></div>
     <div id="progress-bar-container" class="hidden">
         <div id="progress-bar"></div>
         <div id="progress-text" class="hidden">Processing...</div>
     </div>
+    <div id="processing-message" class="hidden"></div>
+    <div id="similarity-score-container" class="hidden">
+        <span id="similarity-score-text">Similarity Score: </span>
+        <span id="similarity-score-value">0</span>
+        <span id="similarity-indicator" title="Hover for details">🤔</span>
+    </div>
     <div id="output">The explanation will appear here...</div>
 </div>
+<script src="requestManager.js"></script>
 <script src="matcher.js"></script>
 <script src="popup.js"></script>
 </body>

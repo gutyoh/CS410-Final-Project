@@ -79,6 +79,12 @@ button#save-api-key {
     width: 40px;
 }
 
+.action-button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
 #save-confirm {
     color: #28a745;
     margin-left: 5px;
