@@ -57,16 +57,19 @@ const resetProgress = (progressBar, progressText) => {
 
 const processModelResponse = (model, responseText) => {
     const lines = responseText.split('\n');
+    const starterWords = ['Sure', 'Certainly'];
+    const endingWords = ['Would', 'Do', 'Can', 'Should', "Does", "I"];
 
     if (model === 'replicate' || model === 'cohere') {
-        if (lines.length > 0 && lines[0].trim().startsWith('Sure')) {
+        if (lines.length > 0 && starterWords.some(word => lines[0].trim().startsWith(word))) {
             lines.shift();
         }
 
         for (let i = 0; i < lines.length; i++) {
-            const wouldIndex = lines[i].indexOf('Would');
-            if (wouldIndex !== -1) {
-                lines[i] = lines[i].substring(0, wouldIndex);
+            const lineTrimmed = lines[i].trim();
+            const foundWord = endingWords.find(word => lineTrimmed.includes(word));
+            if (foundWord) {
+                lines[i] = lineTrimmed.substring(0, lineTrimmed.indexOf(foundWord));
                 lines.length = i + 1;
                 break;
             }
@@ -74,9 +77,7 @@ const processModelResponse = (model, responseText) => {
     }
 
     let response = lines.join('\n').trim();
-    response = response.trim().replace(/^"/, '').replace(/"$/, '');
-
-    return response;
+    return response.replace(/^"/, '').replace(/"$/, '');
 };
 
 
@@ -99,9 +100,7 @@ const callAIModel = async (apiKey, prompt, action, model) => {
 
     const responseData = await response.json();
 
-    const processedText = processModelResponse(model, responseData.data[0]);
-
-    responseData.data[0] = processedText;
+    responseData.data[0] = processModelResponse(model, responseData.data[0]);
 
     return responseData;
 };
@@ -288,9 +287,7 @@ const getEmbedding = async (apiKey, texts, provider) => {
         throw new Error(`API Error: ${jsonResponse.status}`);
     }
 
-    const embeddings = jsonResponse.data.map(entry => entry.embedding);
-
-    return embeddings;
+    return jsonResponse.data.map(entry => entry.embedding);
 };
 
 const saveSelectedModel = () => {

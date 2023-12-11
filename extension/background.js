@@ -7,7 +7,11 @@ chrome.runtime.onInstalled.addListener(function () {
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-    chrome.tabs.sendMessage(tab.id, {type: 'contextMenuClicked'});
+    chrome.tabs.sendMessage(tab.id, {type: 'contextMenuClicked'}).then(response => {
+        console.log(response);
+    }).catch(error => {
+        console.error(error);
+    });
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {

@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "types": ["chrome"],
+    "module": "commonjs",
+    "checkJs": true,
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["*", "extension/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

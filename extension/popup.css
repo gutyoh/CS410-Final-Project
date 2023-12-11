@@ -5,7 +5,7 @@ body, input, button, textarea {
 
 #api-key {
     font-family: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
-    font-size: 9px;
+    font-size: 10px;
 }
 
 #model-select {

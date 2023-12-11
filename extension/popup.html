@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
           integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -13,7 +14,7 @@
     <div class="input-group">
         <label for="api-key">API Key:</label>
         <div class="api-input-container">
-            <input type="text" id="api-key" placeholder="Enter your API Key here"/>
+            <input type="password" id="api-key" placeholder="Enter your API Key here"/>
             <button id="save-api-key" title="Save API Key"><i class="fas fa-save"></i></button>
             <span id="save-confirm" class="hidden"><i class="fas fa-check-circle"></i></span>
         </div>
@@ -25,7 +26,6 @@
             <option value="openai">OpenAI gpt-4-1106-preview</option>
             <option value="replicate">Meta llama-2-13b-chat</option>
             <option value="cohere">Cohere command</option>
-            <option value="hugging">Hugging Face NOT READY</option>
         </select>
     </div>
     <div class="input-group">
