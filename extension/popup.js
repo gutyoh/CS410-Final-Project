@@ -55,9 +55,35 @@ const resetProgress = (progressBar, progressText) => {
     progressText.classList.add('hidden');
 };
 
-const callAIModel = async (apiKey, promptDetails, action, model) => {
+const processModelResponse = (model, responseText) => {
+    const lines = responseText.split('\n');
+    const starterWords = ['Sure', 'Certainly'];
+    const endingWords = ['Would', 'Do', 'Can', 'Should', "Does", "I"];
+
+    if (model === 'replicate' || model === 'cohere') {
+        if (lines.length > 0 && starterWords.some(word => lines[0].trim().startsWith(word))) {
+            lines.shift();
+        }
+
+        for (let i = 0; i < lines.length; i++) {
+            const lineTrimmed = lines[i].trim();
+            const foundWord = endingWords.find(word => lineTrimmed.includes(word));
+            if (foundWord) {
+                lines[i] = lineTrimmed.substring(0, lineTrimmed.indexOf(foundWord));
+                lines.length = i + 1;
+                break;
+            }
+        }
+    }
+
+    let response = lines.join('\n').trim();
+    return response.replace(/^"/, '').replace(/"$/, '');
+};
+
+
+const callAIModel = async (apiKey, prompt, action, model) => {
     const endpoint = "https://intelli-server.vercel.app/chatbot/chat";
-    const modelDetails = getModelDetails(model, apiKey, promptDetails, action);
+    const modelDetails = getModelDetails(model, apiKey, prompt, action);
 
     const response = await fetch(endpoint, {
         method: 'POST',
@@ -71,18 +97,24 @@ const callAIModel = async (apiKey, promptDetails, action, model) => {
     if (!response.ok) {
         throw new Error("HTTP-Error: " + response.status);
     }
-    return response.json();
+
+    const responseData = await response.json();
+
+    responseData.data[0] = processModelResponse(model, responseData.data[0]);
+
+    return responseData;
 };
+
 
 const generatePrompt = (selectedText, action) => {
     let userInstruction;
 
     switch (action) {
         case 'explain':
-            userInstruction = `YOU MUST DIRECTLY provide a comprehensive but CONCISE explanation of the following text, ensuring it's clear and easy to understand. Keep the response concise enough to fit comfortably in a small UI space. Your output MUST ONLY DIRECTLY include the paraphrased text and NO MORE ADDITIONAL TEXT!`;
+            userInstruction = `YOU MUST DIRECTLY provide a comprehensive but CONCISE explanation of the following text, ensuring it's clear and easy to understand. Keep the response concise enough to fit comfortably in a small UI space. Your output MUST ONLY DIRECTLY include the explanation text and NO MORE ADDITIONAL TEXT!`;
             break;
         case 'summarize':
-            userInstruction = `YOU MUST DIRECTLY summarize the following text in a brief, clear manner. Focus on key points and ensure the summary is CONCISE for easy reading in a limited UI space. Your output MUST ONLY DIRECTLY include the paraphrased text and NO MORE ADDITIONAL TEXT!`;
+            userInstruction = `YOU MUST DIRECTLY summarize the following text in a brief, clear manner. Focus on key points and ensure the summary is CONCISE for easy reading in a limited UI space. Your output MUST ONLY DIRECTLY include the summarized text and NO MORE ADDITIONAL TEXT!`;
             break;
         case 'paraphrase':
             userInstruction = `YOU MUST DIRECTLY paraphrase the following text to convey the same meaning in different words. Keep the paraphrased text clear and CONCISE for display in a compact UI. Your output MUST ONLY DIRECTLY include the paraphrased text and NO MORE ADDITIONAL TEXT!`;
@@ -95,7 +127,8 @@ const generatePrompt = (selectedText, action) => {
 };
 
 const getModelDetails = (model, apiKey, prompt, action) => {
-    const systemInstruction = `You're an expert in processing text. Your task is to ${action} the text given by the user. Remember YOU MUST strictly follow the user's instructions.`;
+    const systemInstruction = `You are a text processing expert. Your task is to ${action} the text given by the user. For every response, YOU MUST NEVER provide ANY INTRODUCTORY OR CONCLUDING PHRASES. YOU MUST strictly adhere to the user's instructions for each action.`;
+
 
     const providers = {
         'openai': {
@@ -124,7 +157,32 @@ const getModelDetails = (model, apiKey, prompt, action) => {
     };
 };
 
+const requestManager = new RequestManager(5000);
+
 const processText = async (action) => {
+    const processingMessageElement = document.getElementById('processing-message');
+    const outputElement = document.getElementById('output');
+    const actionButtons = document.querySelectorAll('.action-button');
+
+    if (requestManager.isProcessing) {
+        processingMessageElement.innerText = 'Processing the previous request. Please wait...';
+        return;
+    }
+
+    if (!requestManager.canProcessRequest()) {
+        const waitTime = requestManager.getTimeUntilNextRequest();
+        processingMessageElement.innerText = `Please wait ${waitTime} seconds before making another request.`;
+        actionButtons.forEach(button => button.disabled = true);
+        setTimeout(() => {
+            actionButtons.forEach(button => button.disabled = false);
+            processingMessageElement.innerText = '';
+        }, waitTime * 1000);
+        return;
+    }
+
+    requestManager.startProcessing();
+    actionButtons.forEach(button => button.disabled = true);
+
     const model = document.getElementById('model-select').value;
     const apiKey = document.getElementById('api-key').value;
     const selectedText = document.getElementById('text-input').value;
@@ -132,7 +190,9 @@ const processText = async (action) => {
     const prompt = generatePrompt(selectedText, action);
 
     if (!apiKey || !model) {
-        document.getElementById('output').innerText = "Please enter your API key and select a model.";
+        outputElement.innerText = "Please enter your API key and select a model.";
+        requestManager.stopProcessing();
+        actionButtons.forEach(button => button.disabled = false);
         return;
     }
 
@@ -142,16 +202,25 @@ const processText = async (action) => {
         completeProgress(progressBar);
 
         const outputText = response.data[0];
-        document.getElementById('output').innerText = outputText;
+        outputElement.innerText = outputText;
 
-        // Calculate cosine similarity
-        const similarityScore = await calculateResultSimilarity(apiKey, selectedText, outputText, model);
-        updateSimilarityUI(similarityScore);
+        calculateResultSimilarity(apiKey, selectedText, outputText, model)
+            .then(similarityScore => {
+                updateSimilarityUI(similarityScore)
+            })
+            .catch(error => {
+                console.error("Error while calculating similarity:", error);
+            });
     } catch (error) {
         console.error("Error:", error);
-        document.getElementById('output').innerText = error.message || "An error occurred.";
+        outputElement.innerText = error.message || "An error occurred.";
+    } finally {
+        requestManager.stopProcessing();
+        actionButtons.forEach(button => button.disabled = false);
+        processingMessageElement.innerText = '';
     }
 };
+
 
 const calculateResultSimilarity = async (apiKey, selectedText, outputText, model) => {
     try {
@@ -213,7 +282,6 @@ const getEmbedding = async (apiKey, texts, provider) => {
     }
 
     const jsonResponse = await response.json();
-    console.log("Embedding response:", jsonResponse); // Debugging log
 
     if (jsonResponse.status !== "OK" || !jsonResponse.data) {
         throw new Error(`API Error: ${jsonResponse.status}`);
@@ -222,14 +290,31 @@ const getEmbedding = async (apiKey, texts, provider) => {
     return jsonResponse.data.map(entry => entry.embedding);
 };
 
+const saveSelectedModel = () => {
+    const selectedModel = document.getElementById('model-select').value;
+    chrome.storage.local.set({"selectedModel": selectedModel}, () => {
+        console.log('Model saved');
+    });
+};
+
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const storedApiKey = await getStoredValue("apiKey");
+    const storedModel = await getStoredValue("selectedModel");
     const selectedText = await getStoredValue("selectedText");
-    const apiKey = await getStoredValue("apiKey");
 
-    document.getElementById('api-key').value = apiKey || '';
-    document.getElementById('text-input').value = selectedText || '';
+    if (storedApiKey) {
+        document.getElementById('api-key').value = storedApiKey;
+    }
+    if (storedModel) {
+        document.getElementById('model-select').value = storedModel;
+    }
+    if (selectedText) {
+        document.getElementById('text-input').value = selectedText;
+    }
+
     document.getElementById('text-input').readOnly = false;
     document.getElementById('save-api-key').addEventListener('click', saveApiKey);
+    document.getElementById('model-select').addEventListener('change', saveSelectedModel);
     bindActionButtons();
 });
