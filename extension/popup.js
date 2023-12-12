@@ -58,7 +58,7 @@ const resetProgress = (progressBar, progressText) => {
 const processModelResponse = (model, responseText) => {
     const lines = responseText.split('\n');
     const starterWords = ['Sure', 'Certainly'];
-    const endingWords = ['Would', 'Do', 'Can', 'Should', "Does", "I"];
+    const endingWords = ['Would you', 'Do you', 'Can I', 'Should I', 'Is there', 'Does this'];
 
     if (model === 'replicate' || model === 'cohere') {
         if (lines.length > 0 && starterWords.some(word => lines[0].trim().startsWith(word))) {
