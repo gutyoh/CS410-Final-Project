@@ -7,7 +7,8 @@
 3. [Usage](#usage)
 4. [Demonstration](#demonstration)
 5. [Testing](#testing)
-5. [Project Documents](#project-documents)
+6. [Project Documents](#project-documents)
+7. [Future Imrpovement](#future-imrpovement)
 
 
 ## overview
@@ -80,5 +81,8 @@ TODO: add the demo video link.
 - [Click here to view the Project Progress Report PDF](./docs/%20CS410_Final_Project_Progress_Report.pdf)
 
 
+## Future Imrpovement
 
+- **Integrate additional LLMs**: Expand the range of supported models by incorporating open-source LLMs from Hugging Face and similar platforms.
 
+- **Enhance vector similarity accuracy**: Dedicate a third-party model specifically for vector generation to improve relevance scoring and reduce biases inherent in using the same model for both response generation and vector calculation.
