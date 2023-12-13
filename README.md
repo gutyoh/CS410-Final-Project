@@ -41,8 +41,6 @@
 
 <img src="screenshots/extension_load.png" width="950em">
 
- 
-
 **Step 4**: Once the extension is loaded, enter the API key for your LLM provider of choice. Supported providers include:
 - [platform.openai.com](https://platform.openai.com/)
 - [dashboard.cohere.com](https://dashboard.cohere.com/)
@@ -72,15 +70,14 @@ IntelliServer is an integral backend component for Textual Spotlight, offering r
 For more insights into IntelliServer's capabilities and services, visit their [GitHub repository](https://github.com/intelligentnode/IntelliServer).
 
 
-
 ## Accessing and using the Extension
 After successfully installing the Textual Spotlight extension, you can start using it by following these steps:
 
-1. **Open the Extensions Menu:** Click on the jigsaw puzzle icon 🧩 in the upper right corner of your Chrome browser to access your installed extensions:
+1. **Open the Extensions Menu:** Click on the jigsaw puzzle 🧩 icon in the upper right corner of your Chrome browser to access your installed extensions:
 
 ![Alt text](image-1.png)
 
-2. **Find Textual Spotlight:** Locate and click on the Textual Spotlight extension, marked with a magnifying glass icon 🔍:
+2. **Find Textual Spotlight:** Locate and click on the Textual Spotlight extension, marked with a magnifying glass 🔍 icon:
 
 ![Alt text](image.png)
 
