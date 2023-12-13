@@ -18,7 +18,7 @@
 1. [Overview](#overview)
 2. [Installation](#installation)
 3. [Backend](#backend)
-4. [Accessing and using the Extension](#accessing-and-using-the-extension)
+4. [Accessing and Using the Extension](#accessing-and-using-the-extension)
 5. [Understanding Text Embeddings and Cosine Similarity](#understanding-text-embeddings-and-cosine-similarity)
 6. [Video Demonstration](#video-demonstration)
 7. [Testing](#testing)
@@ -165,7 +165,7 @@ usage of the extension.
 * Prompt Effectivity Testing
 * Project Progress Reports
 
-#### Ahmad Barqawiz — ahmada8@illinois.edu 
+#### Ahmad Albarqawi — ahmada8@illinois.edu 
 * Popup JS code Integration with IntelliServer
 * Cosine similarity and embedding integration
 * Improving the Popup JS code to better handle LLMs responses
