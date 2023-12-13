@@ -70,7 +70,7 @@ IntelliServer is an integral backend component for Textual Spotlight, offering r
 For more insights into IntelliServer's capabilities and services, visit their [GitHub repository](https://github.com/intelligentnode/IntelliServer).
 
 
-## Accessing and using the Extension
+## Accessing and Using the Extension
 After successfully installing the Textual Spotlight extension, you can start using it by following these steps:
 
 1. **Open the Extensions Menu:** Click on the jigsaw puzzle 🧩 icon in the upper right corner of your Chrome browser to access your installed extensions:
