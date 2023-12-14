@@ -11,6 +11,10 @@
 
 - [Click here to view the Project Progress Report PDF](./docs/%20CS410_Final_Project_Progress_Report.pdf)
 
+### Presentation Slides
+
+- [Click here to view the Presentation Slides PDF](./docs/Textual_Spotlight_Final_Presentation_Slides.pdf)
+
 ---
 
 ## Documentation Content
