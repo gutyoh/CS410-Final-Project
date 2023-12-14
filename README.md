@@ -138,6 +138,9 @@ Watch a Video Demo of using the Textual Spotlight Chrome Extension below:
 
 [![Watch the video](https://cfvod.kaltura.com/p/1329972/sp/132997200/thumbnail/entry_id/1_mlaq8oms/version/100011/width/969/height/579)](https://mediaspace.illinois.edu/media/t/1_mlaq8oms)
 
+
+### In case you can't access the above video, here is the YouTube link: https://youtu.be/GSclJzJj5jg?si=-GnAUdazdcdB8pag
+
 ## Testing
 - [Click here to view the Project Testing PDF](./docs/CS410_Final_Project_Testing.pdf)
 
