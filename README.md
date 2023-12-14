@@ -11,6 +11,11 @@
 
 - [Click here to view the Project Progress Report PDF](./docs/%20CS410_Final_Project_Progress_Report.pdf)
 
+
+### Project Testing
+
+- [Click here to view the Project Testing PDF](./docs/CS410_Final_Project_Testing.pdf)
+
 ### Presentation Slides
 
 - [Click here to view the Presentation Slides PDF](./docs/Textual_Spotlight_Final_Presentation_Slides.pdf)
@@ -25,9 +30,8 @@
 4. [Accessing and Using the Extension](#accessing-and-using-the-extension)
 5. [Understanding Text Embeddings and Cosine Similarity](#understanding-text-embeddings-and-cosine-similarity)
 6. [Video Demonstration](#video-demonstration)
-7. [Testing](#testing)
-8. [Future Improvements](#future-improvements)
-9. [Team Contributions](#team-contributions)
+7. [Future Improvements](#future-improvements)
+8. [Team Contributions](#team-contributions)
 
 ## Overview
 **Textual Spotlight** is a Chrome extension that allows users to highlight specific text in a website and provides explanations, summaries, or paraphrases of the selected text via a seamless browser integration from multiple LLM models with the ability to compare the semantics of the generated result (using Cosine Similarity) and how closely it is related to the user query.
@@ -144,9 +148,6 @@ Watch a Video Demo of using the Textual Spotlight Chrome Extension below:
 
 
 ### In case you can't access the above video, here is the YouTube link: https://youtu.be/GSclJzJj5jg?si=-GnAUdazdcdB8pag
-
-## Testing
-- [Click here to view the Project Testing PDF](./docs/CS410_Final_Project_Testing.pdf)
 
 
 ## Future Improvements
