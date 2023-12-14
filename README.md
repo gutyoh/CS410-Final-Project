@@ -133,7 +133,10 @@ After processing, the extension will display the output within the popup, as sho
 To sum up, these text embeddings allow Textual Spotlight to quantitatively assess how closely the AI's response aligns with the original text's meaning, providing valuable insights into the effectiveness of different AI models. 
 
 ## Video Demonstration
-TODO: add the demo video link.
+
+Watch a Video Demo of using the Textual Spotlight Chrome Extension below:
+
+[![Watch the video](https://cfvod.kaltura.com/p/1329972/sp/132997200/thumbnail/entry_id/1_mlaq8oms/version/100011/width/969/height/579)](https://mediaspace.illinois.edu/media/t/1_mlaq8oms)
 
 ## Testing
 - [Click here to view the Project Testing PDF](./docs/CS410_Final_Project_Testing.pdf)
@@ -155,18 +158,20 @@ usage of the extension.
 #### Hermann Rösch (Team Captain) — hrosch2@illinois.edu
 * General Extension design
 * Popup UI (HTML & CSS) implementation
-* Prompt Engineering
-* Integrating the prompts into the Popup JS code
+* Prompt Engineering/Creation
 * Improving the Popup UI after receiving feedback
+* Recording and Conducting the Video Demonstration
 
 #### Sudeshna Pal — sp92@illinois.edu
 * End-User Testing
 * Popup UI Testing
-* Prompt Effectivity Testing
+* Prompt Testing
+* Improving Prompts and measuring effectivity
 * Project Progress Reports
 
 #### Ahmad Albarqawi — ahmada8@illinois.edu 
 * Popup JS code Integration with IntelliServer
+* Integrating Prompts into the Popup JS code
 * Cosine similarity and embedding integration
 * Improving the Popup JS code to better handle LLMs responses
 * Project Documentation
