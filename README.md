@@ -83,11 +83,11 @@ After successfully installing the Textual Spotlight extension, you can start usi
 
 1. **Open the Extensions Menu:** Click on the jigsaw puzzle 🧩 icon in the upper right corner of your Chrome browser to access your installed extensions:
 
-![Alt text](image-1.png)
+![Alt text](screenshots/image-1.png)
 
 2. **Find Textual Spotlight:** Locate and click on the Textual Spotlight extension, marked with a magnifying glass 🔍 icon:
 
-![Alt text](image.png)
+![Alt text](screenshots/image.png)
 
 After completing the above steps, click on the extension in the Chrome toolbar and should see the below popup:
 
